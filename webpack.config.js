@@ -14,9 +14,15 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        // use: {
+        //   loader: "babel-loader"
+        // },
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            ['import', { libraryName: "antd", style: true }]
+          ]
+        },
       },
       {
         test: /\.html$/,
@@ -47,7 +53,8 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
+          "style-loader",
           {
             loader: "css-loader",
             options: {
@@ -60,6 +67,18 @@ module.exports = {
           "sass-loader",
         ]
       },
+      {
+        test: /\.less$/,
+        use : [
+          {loader: 'style-loader'},
+          {loader: 'css-loader'},
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            }
+          }]
+      }
     ]
   },
   devtool: 'inline-source-map',

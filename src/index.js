@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Testcomp from './Testcomp'
+import App from './Components/App/App';
 
 ReactDOM.render(
-  <Testcomp />,
+  <App />,
   document.getElementById('root'),
 );
