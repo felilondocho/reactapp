@@ -5,7 +5,7 @@ import styles from './Testcomp2.scss';
 
 const Testcomp2 = () => (
   <div>
-    <p class={styles.paragraph}>Second component</p>
+    <p className={styles.paragraph}>Second component</p>
     <DatePicker />
   </div>
 );
