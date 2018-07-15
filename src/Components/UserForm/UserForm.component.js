@@ -1,10 +1,12 @@
 import React from 'react';
 import { Form, Input } from 'antd';
-import { Button } from 'antd/lib/radio';
+import { Button } from 'antd';
+
+import styles from './UserForm.scss';
 
 const FormItem = Form.Item;
 
-class UserForm extends React.component {
+class UserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {username: '', password: ''};
@@ -22,33 +24,36 @@ class UserForm extends React.component {
     this.setState({ password: e.target.value });
   }
 
-  handleSubmit = (e) => {
+  handleSubmit(e) {
+    const { logIn } = this.props;
     e.preventDefault();
-    console.log()
+    logIn({ username: this.state.username, password: this.state.password });
   }
 
   render() {
     return (
-      <Form onSubmit={}>
-        <FormItem>
-          <Input
-            placeholder="username"
-            value={this.state.username}
-            onChange={this.handleUsernameChange}
-          />
-        </FormItem>
-        <FormItem>
-          <Input
-            type="password"
-            placeholder="password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-          />
-        </FormItem>
-        <FormItem>
-          <Button type="primary" />
-        </FormItem>
-      </Form>
+      <div className={styles.formWrapper}>
+        <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
+          <FormItem>
+            <Input
+              placeholder="username"
+              value={this.state.username}
+              onChange={this.handleUsernameChange}
+              required
+            />
+          </FormItem>
+          <FormItem>
+            <Input
+              type="password"
+              placeholder="password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
+              required
+            />
+          </FormItem>
+          <Button className={styles.loginButton} type="primary" htmlType="submit" >Log In</Button>
+        </Form>
+      </div>
     );
   }
 }
