@@ -7,7 +7,7 @@ var jwt_instance = new JWB_AUTH();
 export function logIn(logInInfo) {
   return dispatch => {
     dispatch(sendLogInInfo())
-    return fetch('http://localhost:3000/login', {
+    return fetch("http://localhost:3000/login", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -31,7 +31,7 @@ export function logIn(logInInfo) {
   }
 }
 
-export const sendLogInInfo = () => ({
+const sendLogInInfo = () => ({
   type: LOG_IN_REQUEST,
 });
 
@@ -40,7 +40,7 @@ function successfulLogIn(jwt_id) {
   return { type: LOG_IN_SUCCESSFUL };
 }
 
-export const failedLogIn = () => ({
+const failedLogIn = () => ({
   type: LOG_IN_FAIL,
 });
 

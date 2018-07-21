@@ -10,12 +10,12 @@ const initialState = {
   loginError: false,
 };
 
-export default function logInReducer(state = initialState, action) {
+export default function logIn(state = initialState, action) {
   switch (action.type) {
     case LOG_IN_REQUEST:
       return { ...state, isRequestingLogIn: true };
     case LOG_IN_SUCCESSFUL:
-      return { ...state, loggedIn: true };
+      return { ...state, loggedIn: true, loginError: false };
     case LOG_IN_FAIL:
       return { ...state, loggedIn: false, loginError: true };
     case LOG_OUT:

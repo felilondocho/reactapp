@@ -1,27 +1,21 @@
 import React from 'react';
+import { Button } from 'antd';
 
 import styles from './App.scss';
 import UserForm from '../UserForm';
-import { Button } from 'antd';
+import Timeline from '../Timeline/Timeline';
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     var jwt_instance = new JWB_AUTH();
-//     jwt_instance.tokenExist
-//   }
-// }
+const LoggedInBlock = (logOut) => (
+  <div>
+    <Timeline />
+    <Button onClick={logOut}>Log out</Button>
+  </div>
+);
 
-const App = ({ loggedIn, logOut }) => (
+const App = ({ loggedIn, logOut, loginError }) => (
   <div className={styles.mainApp}>
-  {loggedIn ?
-    <div>
-      <p>Logged in!</p>
-      <Button onClick={logOut}>Log out</Button>
-    </div>
-    :
-    <UserForm />
-  }
+    {loggedIn ? LoggedInBlock(logOut) : <UserForm/>}
+    {loginError && (<p>Wrong credentials</p>)}
   </div>
 );
 
