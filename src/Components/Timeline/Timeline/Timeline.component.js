@@ -24,12 +24,13 @@ class Timeline extends React.Component {
     const { posts, fetchPosts, currentInitChunk, currentEndChunk } = this.props;
     return (
       <div className={styles.timeline}>
-        {posts.length && (fetchedPosts(posts))}
-        {posts.length && (
-          <Button onClick={() => fetchPosts(currentInitChunk, currentEndChunk)}>Load more</Button>
+        {(posts.length > 0) && (fetchedPosts(posts))}
+        {(posts.length > 0) && (
+          <Button onClick={() => fetchPosts(currentInitChunk, currentEndChunk)}>
+            Load more
+          </Button>
         )}
-        {!posts.length && (<h1>Loading...</h1>)}
-        {/* {posts.length ? fetchedPosts(posts) : <h1>Loading...</h1>} */}
+        {!(posts.length > 0) && (<h1>Loading...</h1>)}
       </div>
     );
   }

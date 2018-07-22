@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Alert } from 'antd';
 
 import styles from './App.scss';
 import UserForm from '../UserForm';
@@ -12,10 +12,16 @@ const LoggedInBlock = (logOut) => (
   </div>
 );
 
+const error = () => {
+  message.error('Wrong credentials');
+};
+
 const App = ({ loggedIn, logOut, loginError }) => (
   <div className={styles.mainApp}>
+    {/* {loginError && (<h2 className={styles.loginError}>Wrong credentials</h2>)} */}
+    {/* {loginError && (error()) } */}
+    {loginError && (<Alert className={styles.loginError} message="Wrong credentials" type="error" />) }
     {loggedIn ? LoggedInBlock(logOut) : <UserForm/>}
-    {loginError && (<p>Wrong credentials</p>)}
   </div>
 );
 

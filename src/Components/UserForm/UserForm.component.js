@@ -51,7 +51,9 @@ class UserForm extends React.Component {
               required
             />
           </FormItem>
-          <Button className={styles.loginButton} type="primary" htmlType="submit" >Log In</Button>
+          <Button className={styles.loginButton} type="primary" htmlType="submit" >
+            Log In
+          </Button>
         </Form>
       </div>
     );
