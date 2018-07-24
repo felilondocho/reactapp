@@ -1,28 +1,50 @@
 import React from 'react';
-import { Button, Alert } from 'antd';
+import { Alert } from 'antd';
 
 import styles from './App.scss';
+import Header from '../Header';
 import UserForm from '../UserForm';
 import Timeline from '../Timeline/Timeline';
 
-const LoggedInBlock = (logOut) => (
-  <div>
+const LoggedInBlock = () => (
+  <div className={styles.contentWrapper}>
+    <Header />
     <Timeline />
-    <Button onClick={logOut}>Log out</Button>
   </div>
 );
 
-const error = () => {
-  message.error('Wrong credentials');
-};
-
-const App = ({ loggedIn, logOut, loginError }) => (
-  <div className={styles.mainApp}>
-    {/* {loginError && (<h2 className={styles.loginError}>Wrong credentials</h2>)} */}
-    {/* {loginError && (error()) } */}
-    {loginError && (<Alert className={styles.loginError} message="Wrong credentials" type="error" />) }
-    {loggedIn ? LoggedInBlock(logOut) : <UserForm/>}
-  </div>
+const logInErrorBlock = logInError => (
+  <Alert
+    className={styles.loginError}
+    message={logInError}
+    type="error"
+  />
 );
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    const { checkToken } = this.props;
+    checkToken();
+  }
+
+  render() {
+    const { loggedIn, logInError, logInLoading } = this.props;
+    const displayLoader = !logInError && logInLoading;
+    const displayLoggedInContent = !logInError && !logInLoading && loggedIn;
+    
+    return (
+      <div className={styles.mainApp}>
+        {logInError && (logInErrorBlock(logInError)) }
+        {displayLoader && (<h1>Signing in...</h1>) }
+        {displayLoggedInContent && (LoggedInBlock())}
+        {!loggedIn && <UserForm/>}
+      </div>
+    );
+  }
+}
 
 export default App;

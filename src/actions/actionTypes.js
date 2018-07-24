@@ -1,7 +1,7 @@
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESSFUL = 'LOG_IN_SUCCESSFUL';
 export const LOG_IN_FAIL = 'LOG_IN_FAIL';
-export const LOG_OUT = 'LOG_OUT';
+export const CHECK_INITIAL_TOKEN = 'CHECK_INITIAL_TOKEN';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const REQUEST_POST = 'REQUEST_POST';
@@ -11,3 +11,5 @@ export const FAIL_FETCH_POSTS = 'FAIL_FETCH_POSTS';
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const SUCCESS_FETCH_COMMENTS = 'SUCCESS_FETCH_COMMENTS';
 export const FAIL_FETCH_COMMENTS = 'FAIL_FETCH_COMMENTS';
+
+export const LOG_OUT = 'LOG_OUT';

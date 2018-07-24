@@ -1,25 +1,38 @@
-import { LOG_IN_REQUEST, LOG_IN_SUCCESSFUL, LOG_IN_FAIL, LOG_OUT } from '../actions/actionTypes';
-
-import JWB_AUTH from '../lib/jwt_auth';
-
-var jwt_instance = new JWB_AUTH();
+import { LOG_IN_REQUEST,
+  LOG_IN_SUCCESSFUL,
+  LOG_IN_FAIL,
+  CHECK_INITIAL_TOKEN,
+} from '../actions/actionTypes';
 
 const initialState = {
-  isRequestingLogIn: false,
-  loggedIn: jwt_instance.loggedIn(),
-  loginError: false,
+  logInLoading: false,
+  loggedIn: false,
+  logInError: '',
 };
 
 export default function logIn(state = initialState, action) {
   switch (action.type) {
+    case CHECK_INITIAL_TOKEN:
+      return { ...state, loggedIn: action.payload };
     case LOG_IN_REQUEST:
-      return { ...state, isRequestingLogIn: true };
+      return {
+        ...state,
+        logInLoading: true,
+      };
     case LOG_IN_SUCCESSFUL:
-      return { ...state, loggedIn: true, loginError: false };
+      return {
+        ...state,
+        loggedIn: true,
+        logInError: '',
+        logInLoading: false,
+      };
     case LOG_IN_FAIL:
-      return { ...state, loggedIn: false, loginError: true };
-    case LOG_OUT:
-      return { ...state, loggedIn: false };
+      return {
+        ...state,
+        loggedIn: false,
+        logInError: action.payload,
+        logInLoading: false,
+      };
     default:
       return state;
   }

@@ -10,7 +10,6 @@ class UserForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {username: '', password: ''};
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -36,7 +35,7 @@ class UserForm extends React.Component {
         <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
           <FormItem>
             <Input
-              placeholder="username"
+              placeholder="Username"
               value={this.state.username}
               onChange={this.handleUsernameChange}
               required
@@ -45,7 +44,7 @@ class UserForm extends React.Component {
           <FormItem>
             <Input
               type="password"
-              placeholder="password"
+              placeholder="Password"
               value={this.state.password}
               onChange={this.handlePasswordChange}
               required

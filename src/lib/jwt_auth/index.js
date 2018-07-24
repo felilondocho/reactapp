@@ -13,7 +13,7 @@ export default class JWT_AUTH {
   }
 
   loggedIn() {
-     return sessionStorage.getItem('jwt_id') ? true : false;
+    return sessionStorage.getItem('jwt_id') ? true : false;
   }
 
 }

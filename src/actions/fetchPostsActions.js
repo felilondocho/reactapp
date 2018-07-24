@@ -1,7 +1,7 @@
 import {
   SUCCESS_FETCH_POSTS,
   FAIL_FETCH_POSTS,
-  REQUEST_POST
+  REQUEST_POST,
 } from './actionTypes';
 
 import JWB_AUTH from '../lib/jwt_auth';
@@ -9,9 +9,8 @@ import JWB_AUTH from '../lib/jwt_auth';
 var jwt_instance = new JWB_AUTH();
 
 export function fetchPosts(currentInitChunk, currentEndChunk) {
-  console.log(currentInitChunk);
   return dispatch => {
-    dispatch(requestPosts())
+    dispatch(requestPosts());
     return fetch("http://localhost:3000/getPosts", {
       method: 'POST',
       headers: {
@@ -21,21 +20,18 @@ export function fetchPosts(currentInitChunk, currentEndChunk) {
       },
       body: JSON.stringify({ currentInitChunk, currentEndChunk }),
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
+    .then(response => Promise.all([response.ok, response.json()]))
+    .then(([responseOk, body]) => {
+      if (responseOk) {
+        dispatch(successfulFetch(body));
       } else {
-        // response.json().then(text => { throw new Error(text.error) });
-        throw new Error("Error")
+        dispatch(failedFetch(body.error));
       }
     })
-    .then(responseJson => {
-      dispatch(successfulFetch(responseJson));
-    })
-    .catch((error) => {
-      dispatch(failedFetch(error))
-    })
-  }
+    .catch(() => {
+      dispatch(failedFetch("Server error"));
+    });
+  };
 }
 
 const requestPosts = () => ({
@@ -43,9 +39,9 @@ const requestPosts = () => ({
 })
 
 const successfulFetch = payload => ({
-  type: SUCCESS_FETCH_POSTS, payload
+  type: SUCCESS_FETCH_POSTS, payload,
 });
 
 const failedFetch = error => ({
-  type: FAIL_FETCH_POSTS
+  type: FAIL_FETCH_POSTS, payload: error,
 });

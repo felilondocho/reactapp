@@ -7,7 +7,7 @@ import {
 const initialState = {
   comments: {},
   fetchingComments: false,
-  fetchCommentsError: false,
+  fetchCommentsError: '',
 };
 
 export default function fetchComments(state = initialState, action) {
@@ -18,13 +18,14 @@ export default function fetchComments(state = initialState, action) {
       return {
         ...state,
         fetchingComments: false,
-        comments: {...state.comments, ...action.payload}
+        comments: {...state.comments, ...action.payload},
+        fetchCommentsError: '',
       };
     case FAIL_FETCH_COMMENTS:
       return {
         ...state,
         fetchingComments: false,
-        fetchCommentsError: true
+        fetchCommentsError: action.payload,
       };
     default:
       return state;

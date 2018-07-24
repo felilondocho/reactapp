@@ -10,7 +10,7 @@ var jwt_instance = new JWB_AUTH();
 
 export function fetchComments(postId) {
   return dispatch => {
-    dispatch(requestComments())
+    dispatch(requestComments());
     return fetch("http://localhost:3000/getComments/", {
       method: 'POST',
       headers: {
@@ -20,21 +20,18 @@ export function fetchComments(postId) {
       },
       body: JSON.stringify(postId),
     })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
+    .then(response => Promise.all([response.ok, response.json()]))
+    .then(([responseOk, body]) => {
+      if (responseOk) {
+        dispatch(successfulFetchComments(body));
       } else {
-        // response.json().then(text => { throw new Error(text.error) });
-        throw new Error("Error");
+        dispatch(failedFetchComments(body.error));
       }
     })
-    .then(responseJson => {
-      dispatch(successfulFetchComments(responseJson));
-    })
-    .catch(error => {
-      dispatch(failedFetchComments());
-    })
-  }
+    .catch(() => {
+      dispatch(failedFetchComments("Server error"));
+    });
+  };
 }
 
 const requestComments = () => ({
@@ -42,9 +39,9 @@ const requestComments = () => ({
 });
 
 const successfulFetchComments = payload => ({
-  type: SUCCESS_FETCH_COMMENTS, payload: { [payload[0].postId]: payload }
+  type: SUCCESS_FETCH_COMMENTS, payload: { [payload[0].postId]: payload },
 });
 
-const failedFetchComments = () => ({
-  type: FAIL_FETCH_COMMENTS,
+const failedFetchComments = error => ({
+  type: FAIL_FETCH_COMMENTS, payload: error,
 });
